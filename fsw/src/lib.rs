@@ -169,7 +169,6 @@ pub extern "C" fn Rust_AppInit() {
             if status == OS_SUCCESS as i32 {
                 tlm_packet.cmd_received_counter += 1;
 
-                let cmd_packet: &CFE_SB_CmdHdr_t = mem::transmute(*rcv_packet);
 
                 // send telemetry packet off to SB
                 CFE_MSG_Init(
@@ -178,17 +177,17 @@ pub extern "C" fn Rust_AppInit() {
                     mem::size_of::<RustTlm>() as usize,
                 );
                 CFE_SB_TimeStampMsg(mem::transmute(&mut tlm_packet));
-                CFE_SB_SendMsg(mem::transmute(&mut tlm_packet));
+                CFE_SB_TransmitMsg(mem::transmute(&mut tlm_packet), false);
 
                 CFE_EVS_SendEvent(
                     RUST_APP_INF_EID,
-                    CFE_EVS_INFORMATION as u16,
+                    CFE_EVS_EventType_CFE_EVS_EventType_INFORMATION as u16,
                     "Rust telemetry sent".as_ptr() as *const i8,
                 );
             } else {
                 CFE_EVS_SendEvent(
                     RUST_APP_INF_EID,
-                    CFE_EVS_INFORMATION as u16,
+                    CFE_EVS_EventType_CFE_EVS_EventType_INFORMATION as u16,
                     "Rust Command Error %d 0x%08X ".as_ptr() as *const i8,
                     status,
                     status,
