@@ -1,17 +1,17 @@
 [package]
-name = "rust"
+name = "rust_sample"
 version = "0.1.0"
 authors = ["nsmryan <nsmryan@gmail.com>"]
 
 [lib]
-name="rust"
-crate-type=["cdylib"]
+name="rust_sample"
+crate-type=["staticlib"]
 
 [build-dependencies]
 bindgen="0.72.1"
 
 [dependencies]
-cfs-sys = { path = "/home/dom/repositories/blue-origin-interview/cfs-sys/" }
+cfs-sys = { path = "/home/dom/repositories/blue-origin-interview/cFS/cfs-sys/" }
 
 [profile.release]
 lto=true

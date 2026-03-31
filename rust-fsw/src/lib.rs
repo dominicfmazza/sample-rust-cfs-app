@@ -93,7 +93,7 @@ fn CFE_ES_PerfLogExit(perf_id: uint32) {
 /// the function is will call. This requires configuring
 /// the cfe_es_startup.scr file to load the Rust App.
 #[no_mangle]
-pub extern "C" fn Rust_AppInit() {
+pub extern "C" fn SAMPLE_APP_Main() {
     let mut status = 0;
 
     // let mut run_status : uint32 = CFE_ES_RUNSTATUS_APP_RUN;
@@ -123,7 +123,7 @@ pub extern "C" fn Rust_AppInit() {
         );
 
         status = CFE_EVS_Register(
-            0 as *mut c_void,
+            std::ptr::null_mut::<c_void>(),
             0,
             CFE_EVS_EventFilter_CFE_EVS_EventFilter_BINARY as u16,
         );
